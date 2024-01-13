@@ -40,9 +40,9 @@ public class NullableTest
     [Fact]
     public void TestBind_HandleNonNullAndReturnNull()
     {
-        string nullString = "1234";
+        string nonNullString = "1234";
 
-        var result = nullString
+        var result = nonNullString
                         .Bind(StrictToUpper);
 
         Assert.Null(result);
@@ -51,11 +51,11 @@ public class NullableTest
     [Fact]
     public void TestBind_HandleNonNullAndReturnNonNull()
     {
-        string nullString = "qwerty";
+        string nonNullString = "qwerty";
 
 
 
-        var result = nullString
+        var result = nonNullString
                         .Bind(StrictToUpper);
 
         Assert.NotNull(result);
