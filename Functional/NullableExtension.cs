@@ -11,4 +11,11 @@ public static class NullableExtension
         null => default,
         _ => f(t)
     };
+
+    public static TResult? Bind<T, TResult>(this T? t, Func<T, TResult?> f) where T : notnull where TResult : notnull
+    => t switch
+    {
+        null => default,
+        _ => f(t)
+    };
 }

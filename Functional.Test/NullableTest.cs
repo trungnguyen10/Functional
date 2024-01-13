@@ -1,4 +1,3 @@
-using Functional;
 namespace Functional.Test;
 
 public class NullableTest
@@ -25,5 +24,57 @@ public class NullableTest
                         .Map(s => s.Length);
 
         Assert.Equal(5, count);
+    }
+
+    [Fact]
+    public void TestBind_HandleNull()
+    {
+        string nullString = null;
+
+        Func<string, string?> strictToUpper = (string s) =>
+            s.All(char.IsLetter)
+            ? s.ToUpper()
+            : null
+        ;
+
+        var result = nullString
+                        .Bind(strictToUpper);
+
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public void TestBind_HandleNonNullAndReturnNull()
+    {
+        string nullString = "1234";
+
+        Func<string, string?> strictToUpper = (string s) =>
+            s.All(char.IsLetter)
+            ? s.ToUpper()
+            : null
+        ;
+
+        var result = nullString
+                        .Bind(strictToUpper);
+
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public void TestBind_HandleNonNullAndReturnNonNull()
+    {
+        string nullString = "qwerty";
+
+        Func<string, string?> strictToUpper = (string s) =>
+            s.All(char.IsLetter)
+            ? s.ToUpper()
+            : null
+        ;
+
+        var result = nullString
+                        .Bind(strictToUpper);
+
+        Assert.NotNull(result);
+        Assert.Equal("QWERTY", result);
     }
 }
