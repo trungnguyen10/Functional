@@ -18,4 +18,18 @@ public static class NullableExtension
         null => default,
         _ => f(t)
     };
+
+    public static T Reduce<T>(this T? t, T orElse) where T : notnull
+    => t switch
+    {
+        null => orElse ?? throw new NullReferenceException(nameof(orElse)),
+        _ => t
+    };
+
+    public static T Reduce<T>(this T? t, Func<T> f) where T : notnull
+    => t switch
+    {
+        null => f() ?? throw new InvalidOperationException($"{nameof(f)} yields to null"),
+        _ => t
+    };
 }

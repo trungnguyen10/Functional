@@ -66,4 +66,41 @@ public class NullableTest
         s.All(char.IsLetter)
         ? s.ToUpper()
         : null;
+
+    [Fact]
+    public void TestReduce_HandleNullAndThrowWhenReturnNull()
+    {
+        string nullString = null;
+
+        Assert.Throws<NullReferenceException>(() => nullString.Reduce(default(string)));
+        Assert.Throws<InvalidOperationException>(() => nullString.Reduce(() => default));
+    }
+
+    [Fact]
+    public void TestReduce_HandleNullAndReturnNonNull()
+    {
+        string nullString = null;
+        var result = nullString.Reduce("1234");
+        Assert.Equal("1234", result);
+
+        result = nullString.Reduce(() => "1234");
+        Assert.Equal("1234", result);
+    }
+
+    [Fact]
+    public void TestReduce_HandleNonNullAndReturnNonNull()
+    {
+        string nonNullString = "qwerty";
+        var result = nonNullString.Reduce("1234");
+        Assert.Equal("qwerty", result);
+
+        result = nonNullString.Reduce(() => "1234");
+        Assert.Equal("qwerty", result);
+
+        result = nonNullString.Reduce(() => default);
+        Assert.Equal("qwerty", result);
+
+        result = nonNullString.Reduce(default(string));
+        Assert.Equal("qwerty", result);
+    }
 }
