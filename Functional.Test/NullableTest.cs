@@ -31,14 +31,8 @@ public class NullableTest
     {
         string nullString = null;
 
-        Func<string, string?> strictToUpper = (string s) =>
-            s.All(char.IsLetter)
-            ? s.ToUpper()
-            : null
-        ;
-
         var result = nullString
-                        .Bind(strictToUpper);
+                        .Bind(StrictToUpper);
 
         Assert.Null(result);
     }
@@ -48,14 +42,8 @@ public class NullableTest
     {
         string nullString = "1234";
 
-        Func<string, string?> strictToUpper = (string s) =>
-            s.All(char.IsLetter)
-            ? s.ToUpper()
-            : null
-        ;
-
         var result = nullString
-                        .Bind(strictToUpper);
+                        .Bind(StrictToUpper);
 
         Assert.Null(result);
     }
@@ -65,16 +53,17 @@ public class NullableTest
     {
         string nullString = "qwerty";
 
-        Func<string, string?> strictToUpper = (string s) =>
-            s.All(char.IsLetter)
-            ? s.ToUpper()
-            : null
-        ;
+
 
         var result = nullString
-                        .Bind(strictToUpper);
+                        .Bind(StrictToUpper);
 
         Assert.NotNull(result);
         Assert.Equal("QWERTY", result);
     }
+
+    static string? StrictToUpper(string s) =>
+        s.All(char.IsLetter)
+        ? s.ToUpper()
+        : null;
 }
