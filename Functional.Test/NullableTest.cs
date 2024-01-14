@@ -103,4 +103,28 @@ public class NullableTest
         result = nonNullString.Reduce(default(string));
         Assert.Equal("qwerty", result);
     }
+
+    [Fact]
+    public void TestChainingFunctions()
+    {
+        string nonNullString = "qwerty";
+
+        string result = nonNullString
+                        .Map(s => s.ToLower())
+                        .Bind(StrictToUpper)
+                        .Reduce(string.Empty);
+
+        Assert.False(string.IsNullOrEmpty(result));
+        Assert.Equal("QWERTY", result);
+
+        string? nullString = null;
+
+        result = nullString
+                    .Map(s => s.ToLower())
+                    .Bind(StrictToUpper)
+                    .Reduce(string.Empty);
+
+        Assert.True(string.IsNullOrEmpty(result));
+        Assert.Equal(string.Empty, result);
+    }
 }
