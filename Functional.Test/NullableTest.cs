@@ -127,4 +127,26 @@ public class NullableTest
         Assert.True(string.IsNullOrEmpty(result));
         Assert.Equal(string.Empty, result);
     }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("foo")]
+    [InlineData("bar")]
+    public void TestFunctorLaw_1(string s)
+    {
+        var id = (string s) => s;
+        Assert.Equal(s, s.Map(id));
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("foo")]
+    [InlineData("bar")]
+    public void TestFunctorLaw_2(string s)
+    {
+        var g = (string s) => s.Length;
+        var f = (int x) => x % 2 == 0;
+        Assert.Equal(s.Map(g).Map(f), s.Map(s => f(g(s))));
+    }
+
 }
