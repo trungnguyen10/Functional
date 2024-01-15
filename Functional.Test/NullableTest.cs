@@ -149,4 +149,23 @@ public class NullableTest
         Assert.Equal(s.Select(g).Select(f), s.Select(s => f(g(s))));
     }
 
+    [Theory]
+    [InlineData("")]
+    [InlineData("foo")]
+    [InlineData("bar")]
+    public void Test_LeftIdentity(string s)
+    {
+        Func<string, string?> f = (string s) => StrictToUpper(s).Return();
+        Assert.Equal(s.Return().SelectMany(f), f(s));
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("foo")]
+    [InlineData("bar")]
+    public void Test_RightIdentity(string s)
+    {
+        Func<string, string?> f = (string s) => StrictToUpper(s).Return();
+        Assert.Equal(f(s).SelectMany(s => s.Return()), f(s));
+    }
 }
