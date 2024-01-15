@@ -12,7 +12,7 @@ public static class NullableExtension
         _ => f(t)
     };
 
-    public static TResult? Bind<T, TResult>(this T? t, Func<T, TResult?> f) where T : notnull where TResult : notnull
+    public static TResult? SelectMany<T, TResult>(this T? t, Func<T, TResult?> f) where T : notnull where TResult : notnull
     => t switch
     {
         null => default,

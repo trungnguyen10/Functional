@@ -32,7 +32,7 @@ public class NullableTest
         string nullString = null;
 
         var result = nullString
-                        .Bind(StrictToUpper);
+                        .SelectMany(StrictToUpper);
 
         Assert.Null(result);
     }
@@ -43,7 +43,7 @@ public class NullableTest
         string nonNullString = "1234";
 
         var result = nonNullString
-                        .Bind(StrictToUpper);
+                        .SelectMany(StrictToUpper);
 
         Assert.Null(result);
     }
@@ -56,7 +56,7 @@ public class NullableTest
 
 
         var result = nonNullString
-                        .Bind(StrictToUpper);
+                        .SelectMany(StrictToUpper);
 
         Assert.NotNull(result);
         Assert.Equal("QWERTY", result);
@@ -111,7 +111,7 @@ public class NullableTest
 
         string result = nonNullString
                         .Select(s => s.ToLower())
-                        .Bind(StrictToUpper)
+                        .SelectMany(StrictToUpper)
                         .Reduce(string.Empty);
 
         Assert.False(string.IsNullOrEmpty(result));
@@ -121,7 +121,7 @@ public class NullableTest
 
         result = nullString
                     .Select(s => s.ToLower())
-                    .Bind(StrictToUpper)
+                    .SelectMany(StrictToUpper)
                     .Reduce(string.Empty);
 
         Assert.True(string.IsNullOrEmpty(result));
