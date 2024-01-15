@@ -8,8 +8,8 @@ public class NullableTest
         string nullString = null;
 
         var count = nullString
-                        .Map(s => s.ToUpper())
-                        .Map(s => s.Length);
+                        .Select(s => s.ToUpper())
+                        .Select(s => s.Length);
 
         Assert.Equal(0, count);
     }
@@ -20,8 +20,8 @@ public class NullableTest
         string nullString = "12345";
 
         var count = nullString
-                        .Map(s => s.ToUpper())
-                        .Map(s => s.Length);
+                        .Select(s => s.ToUpper())
+                        .Select(s => s.Length);
 
         Assert.Equal(5, count);
     }
@@ -110,7 +110,7 @@ public class NullableTest
         string nonNullString = "qwerty";
 
         string result = nonNullString
-                        .Map(s => s.ToLower())
+                        .Select(s => s.ToLower())
                         .Bind(StrictToUpper)
                         .Reduce(string.Empty);
 
@@ -120,7 +120,7 @@ public class NullableTest
         string? nullString = null;
 
         result = nullString
-                    .Map(s => s.ToLower())
+                    .Select(s => s.ToLower())
                     .Bind(StrictToUpper)
                     .Reduce(string.Empty);
 
@@ -135,7 +135,7 @@ public class NullableTest
     public void TestFunctorLaw_1(string s)
     {
         var id = (string s) => s;
-        Assert.Equal(s, s.Map(id));
+        Assert.Equal(s, s.Select(id));
     }
 
     [Theory]
@@ -146,7 +146,7 @@ public class NullableTest
     {
         var g = (string s) => s.Length;
         var f = (int x) => x % 2 == 0;
-        Assert.Equal(s.Map(g).Map(f), s.Map(s => f(g(s))));
+        Assert.Equal(s.Select(g).Select(f), s.Select(s => f(g(s))));
     }
 
 }
