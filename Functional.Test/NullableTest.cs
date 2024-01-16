@@ -1,3 +1,5 @@
+using Functional.Nullable;
+
 namespace Functional.Test;
 
 public class NullableTest

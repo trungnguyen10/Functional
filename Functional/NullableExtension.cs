@@ -1,4 +1,4 @@
-﻿namespace Functional;
+﻿namespace Functional.Nullable;
 
 /// <summary>
 /// A simple implementation of functional core functions to handle null reference.
