@@ -62,4 +62,15 @@ public static class OptionExtensions
         some: s => selector(s),
         none: () => new None<TResult>()
     );
+
+    /// <summary>
+    /// Convert the <see cref="Option{T}"/> to <see cref="IEnumerable{T}"/>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="option"></param>
+    /// <returns>The <see cref="IEnumerable{T}"/> that has either one or no element</returns>
+    public static IEnumerable<T> AsEnumerable<T>(this Option<T> option) => option.Match(
+        some: s => [s],
+        none: () => Array.Empty<T>()
+        );
 }

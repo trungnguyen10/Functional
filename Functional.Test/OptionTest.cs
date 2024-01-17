@@ -91,4 +91,12 @@ public class OptionTest
 
         Assert.Equal(f(s).SelectMany(g).SelectMany(h), f(s).SelectMany(x => g(x).SelectMany(h)));
     }
+
+    [Fact]
+    public void TestSelectManyWithIEnumerableAndOption()
+    {
+        var ages = new List<int?> { 10, null, 20 };
+        var avg = ages.SelectMany(a => OptionOf(a)).Average();
+        Assert.Equal((10 + 20) / 2, avg);
+    }
 }
