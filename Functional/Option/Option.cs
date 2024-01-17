@@ -11,7 +11,7 @@ public abstract class Option<T>
     {
         Some<T> aSome => some(aSome.Reduce()),
         None<T> _ => none(),
-        _ => throw new InvalidOperationException($"{nameof(Option<T>)} can onlt be either {nameof(Some<T>)} or {nameof(None<T>)}")
+        _ => throw new InvalidOperationException($"{nameof(Option<T>)} can only be either {nameof(Some<T>)} or {nameof(None<T>)}")
     };
 }
 
@@ -40,7 +40,7 @@ public sealed class Some<T>(T value) : Option<T>
 }
 
 /// <summary>
-///Model a value of type <typeparamref name="T"/> that is absent (null)
+/// Model a value of type <typeparamref name="T"/> that is absent (null)
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public sealed class None<T> : Option<T>
