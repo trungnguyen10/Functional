@@ -22,7 +22,7 @@ public class OptionTest
     public void TestFunctorLaw_1(string s)
     {
         var id = (string s) => s;
-        Option<string> option = OptionOf(s);
+        IOption<string> option = OptionOf(s);
         Assert.Equal(option, option.Select(id));
     }
 
@@ -45,7 +45,7 @@ public class OptionTest
     [InlineData("1234")]
     public void Test_LeftIdentity(string s)
     {
-        Func<string, Option<string>> f = (string s) => s.All(char.IsLetter)
+        Func<string, IOption<string>> f = (string s) => s.All(char.IsLetter)
                                                         ? SomeOf(s.ToUpper())
                                                         : NoneOf<string>();
 
@@ -59,7 +59,7 @@ public class OptionTest
     [InlineData("1234")]
     public void Test_RightIdentity(string s)
     {
-        Func<string, Option<string>> f = (string s) => s.All(char.IsLetter)
+        Func<string, IOption<string>> f = (string s) => s.All(char.IsLetter)
                                                         ? SomeOf(s.ToUpper())
                                                         : NoneOf<string>();
 
@@ -73,7 +73,7 @@ public class OptionTest
     [InlineData("4")]
     public void Test_Associativity(string s)
     {
-        Option<int> f(string s)
+        IOption<int> f(string s)
         {
             if (int.TryParse(s, out var i))
                 return SomeOf(i);
@@ -81,11 +81,11 @@ public class OptionTest
                 return NoneOf<int>();
         }
 
-        Func<int, Option<double>> g = i => i >= 0
+        Func<int, IOption<double>> g = i => i >= 0
                                             ? SomeOf(Math.Sqrt(i))
                                             : NoneOf<double>();
 
-        Func<double, Option<double>> h = d => d == 0
+        Func<double, IOption<double>> h = d => d == 0
                                                 ? NoneOf<double>()
                                                 : SomeOf(1 / d);
 

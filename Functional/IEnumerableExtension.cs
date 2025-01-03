@@ -14,6 +14,6 @@ public static class IEnumerableExtension
     /// <param name="f">A transform function to apply to each element</param>
     /// <returns>An <see cref="IEnumerable{TResult}"/> whose elements are the result of invoking the transform function on each element of the source 
     /// and filtering out <see cref="None{TResult}"/> values</returns>
-    public static IEnumerable<TResult> SelectMany<T, TResult>(this IEnumerable<T> source, Func<T, Option<TResult>> f)
+    public static IEnumerable<TResult> SelectMany<T, TResult>(this IEnumerable<T> source, Func<T, IOption<TResult>> f)
     => source.SelectMany(i => f(i).AsEnumerable());
 }
